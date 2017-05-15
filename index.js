@@ -11,6 +11,16 @@ app.get('/humans', function (req, res) {
     res.json(humans)
 })
 
+app.get('/humans/:id', function (req, res) {
+    var result = humans.find(human => human.id === req.params.id)
+    if (result) {
+        return res.send(result)
+    }
+    res.status(404).send({
+        error: "Human not found"
+    })
+})
+
 app.post('/humans', function (req, res) {
     var human = req.body
     if (!human.name) {
