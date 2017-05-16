@@ -37,6 +37,21 @@ app.post('/humans', function (req, res) {
     res.json(human)
 })
 
+app.put('/humans/:id', function (req, res) {
+    if (!req.body.name) {
+        return res.status(400).send({
+            error: "Name of the human is not provided"
+        })
+    }
+
+    var result = humans.find(human => human.id === req.params.id)
+    if (result) {
+        result.name = req.body.name
+        return res.send(result)
+    }
+    res.json(result)
+})
+
 var port = process.env.PORT || 3000
 app.listen(port, function () {
     console.log('Listening to port ' + port)
