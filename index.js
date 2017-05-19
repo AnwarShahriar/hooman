@@ -8,12 +8,14 @@ app.use(bodyParser.json())
 var humans = []
 
 app.get('/humans', function (req, res) {
+    res.setHeader('Cache-Control', 'public, max-age=31557600');
     res.json(humans)
 })
 
 app.get('/humans/:id', function (req, res) {
     var result = humans.find(human => human.id === req.params.id)
     if (result) {
+        res.setHeader('Cache-Control', 'public, max-age=31557600');
         return res.send(result)
     }
     res.status(404).send({
